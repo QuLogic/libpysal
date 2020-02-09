@@ -98,7 +98,11 @@ class Rook(W):
             ids = get_ids(filepath, idVariable)
         else:
             ids = None
-        w = cls(FileIO(filepath), ids=ids, **kwargs)
+        f = FileIO(filepath)
+        try:
+            w = cls(f, ids=ids, **kwargs)
+        finally:
+            f.close()
         w.set_shapefile(filepath, idVariable=idVariable, full=full)
         if sparse:
             w = w.to_WSP()
@@ -263,7 +267,11 @@ class Queen(W):
             ids = get_ids(filepath, idVariable)
         else:
             ids = None
-        w = cls(FileIO(filepath), ids=ids, **kwargs)
+        f = FileIO(filepath)
+        try:
+            w = cls(f, ids=ids, **kwargs)
+        finally:
+            f.close()
         w.set_shapefile(filepath, idVariable=idVariable, full=full)
         if sparse:
             w = w.to_WSP()
