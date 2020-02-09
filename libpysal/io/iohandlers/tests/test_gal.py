@@ -42,7 +42,8 @@ class test_GalIO(unittest.TestCase):
         o = psopen(fname, 'w')
         o.write(w)
         o.close()
-        wnew = psopen(fname, 'r').read()
+        with psopen(fname, 'r') as f:
+            wnew = f.read()
         self.assertEqual(wnew.pct_nonzero, w.pct_nonzero)
 
 

@@ -48,13 +48,13 @@ class test_StataTextIO(unittest.TestCase):
                 suffix='.txt', dir=pysal_examples.get_path(''))
             fname = f.name
             f.close()
-            o = psopen(fname, 'w', 'stata_text')
-            if obj == self.obj_sparse:
-                o.write(w)
-            else:
-                o.write(w, matrix_form=True)
-            o.close()
-            wnew = psopen(fname, 'r', 'stata_text').read()
+            with psopen(fname, 'w', 'stata_text') as o:
+                if obj == self.obj_sparse:
+                    o.write(w)
+                else:
+                    o.write(w, matrix_form=True)
+            with psopen(fname, 'r', 'stata_text') as f:
+                wnew = f.read()
             self.assertEqual(wnew.pct_nonzero, w.pct_nonzero)
             os.remove(fname)
 

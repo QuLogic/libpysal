@@ -18,7 +18,8 @@ except ImportError:
 @ut.skipIf(PANDAS_MISSING, 'Pandas is gone')
 class Test_Adjlist(ut.TestCase):
     def setUp(self):
-        self.knownW = io.open(examples.get_path('columbus.gal')).read()
+        with io.open(examples.get_path('columbus.gal')) as f:
+            self.knownW = f.read()
 
     def test_round_trip(self):
         adjlist = self.knownW.to_adjlist(remove_symmetric=False).astype(int)

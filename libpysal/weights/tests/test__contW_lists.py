@@ -53,7 +53,8 @@ class TestContiguityWeights(unittest.TestCase):
 
     def test_true_rook(self):
         # load queen gal file created using Open Geoda.
-        geodaW = ps_open(pysal_examples.get_path('rook31.gal'), 'r').read()
+        with ps_open(pysal_examples.get_path('rook31.gal'), 'r') as f:
+            geodaW = f.read()
         # build matching W with pysal
         #pysalW = pysal.rook_from_shapefile(pysal_examples.get_path('rook31.shp'),','POLY_ID')
         pysalWb = self.build_W(
@@ -71,7 +72,8 @@ class TestContiguityWeights(unittest.TestCase):
 
         stl = pysal_examples.load_example('stl')
         gal_file = test_file = stl.get_path('stl_hom_rook.gal')
-        geodaW = ps_open(gal_file, 'r').read()
+        with ps_open(gal_file, 'r') as f:
+            geodaW = f.read()
         # build matching W with pysal
         pysalWb = self.build_W(stl.get_path(
             'stl_hom.shp'), ROOK, 'POLY_ID_OG')

@@ -45,12 +45,12 @@ class test_ArcGISTextIO(unittest.TestCase):
             suffix='.txt', dir=pysal_examples.get_path(''))
         fname = f.name
         f.close()
-        o = psopen(fname, 'w', 'arcgis_text')
-        o.write(w)
-        o.close()
+        with psopen(fname, 'w', 'arcgis_text') as o:
+            o.write(w)
         with warnings.catch_warnings(record=True) as warn:
             warnings.simplefilter("always")
-            wnew = psopen(fname, 'r', 'arcgis_text').read()
+            with psopen(fname, 'r', 'arcgis_text') as f:
+                wnew = f.read()
             if len(warn) > 0:
                 assert issubclass(warn[0].category, RuntimeWarning)
                 assert "DBF relating to ArcGIS TEXT was not found, proceeding with unordered string ids." in str(warn[0].message)

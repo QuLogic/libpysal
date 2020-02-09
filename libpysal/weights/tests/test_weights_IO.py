@@ -23,13 +23,15 @@ class TestWIO(unittest.TestCase):
             fname = f.name
             f.close()
 
-            f2 = libpysal.io.open(fname, 'w')
-            f2.varName = f1.varName
-            f2.srs = f1.srs
+            with libpysal.io.open(fname, 'w') as f2:
+                f2.varName = f1.varName
+                f2.srs = f1.srs
 
-            f2.write(w1)
-            f2.close()
-            w2 = libpysal.io.open(fname, 'r').read()
+                f2.write(w1)
+
+            with libpysal.io.open(fname, 'r') as f:
+                w2 = f.read()
+
             assert w1.pct_nonzero == w2.pct_nonzero
             os.remove(fname)
 

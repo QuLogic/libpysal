@@ -42,7 +42,8 @@ class test_MatIO(unittest.TestCase):
             if len(warn) > 0:
                 assert issubclass(warn[0].category, FutureWarning)
         o.close()
-        wnew = psopen(fname, 'r').read()
+        with psopen(fname, 'r') as f:
+            wnew = f.read()
         self.assertEqual(wnew.pct_nonzero, w.pct_nonzero)
         os.remove(fname)
 

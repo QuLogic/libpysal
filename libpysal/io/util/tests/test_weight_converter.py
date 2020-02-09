@@ -77,9 +77,11 @@ class test_WeightConverter(unittest.TestCase):
                     #       are tested in their specific readers
                     warnings.simplefilter("always")
                     if dataformat is None:
-                        wnew = psopen(temp_fname, 'r').read()
+                        with psopen(temp_fname, 'r') as f:
+                            wnew = f.read()
                     else:
-                        wnew = psopen(temp_fname, 'r', dataformat).read()
+                        with psopen(temp_fname, 'r', dataformat) as f:
+                            wnew = f.read()
 
                 if (ext in ['dbf', 'swm', 'dat', 'wk1', 'gwt'] or dataformat == 'arcgis_text'):
                     self.assertEqual(wnew.n, wc.w.n - len(wc.w.islands))
@@ -126,9 +128,11 @@ class test_WeightConverter(unittest.TestCase):
                     #       are tested in their specific readers
                     warnings.simplefilter("always")
                     if dataformat is None:
-                        wnew = psopen(outFile, 'r').read()
+                        with psopen(outFile, 'r') as f:
+                            wnew = f.read()
                     else:
-                        wnew = psopen(outFile, 'r', dataformat).read()
+                        with psopen(outFile, 'r', dataformat) as f:
+                            wnew = f.read()
 
                 if (ext in ['dbf', 'swm', 'dat', 'wk1', 'gwt'] or dataformat == 'arcgis_text'):
                     self.assertEqual(wnew.n, wold.n - len(wold.islands))

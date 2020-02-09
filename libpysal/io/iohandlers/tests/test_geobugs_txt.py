@@ -47,10 +47,10 @@ class test_GeoBUGSTextIO(unittest.TestCase):
                 suffix='', dir=pysal_examples.get_path(''))
             fname = f.name
             f.close()
-            o = psopen(fname, 'w', 'geobugs_text')
-            o.write(w)
-            o.close()
-            wnew = psopen(fname, 'r', 'geobugs_text').read()
+            with psopen(fname, 'w', 'geobugs_text') as o:
+                o.write(w)
+            with psopen(fname, 'r', 'geobugs_text') as f:
+                wnew = f.read()
             self.assertEqual(wnew.pct_nonzero, w.pct_nonzero)
             os.remove(fname)
 

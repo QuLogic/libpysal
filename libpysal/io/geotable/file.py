@@ -29,7 +29,8 @@ def read_files(filepath, **kwargs):
         else:
             try:
                 W_path = os.path.splitext(dbf_path)[0] + '.' + weights
-                W = ps_open(W_path).read()
+                with ps_open(W_path) as f:
+                    W = f.read()
                 insert_metadata(df, W, name='W', inplace=True)
             except IOError:
                 print('Weights construction failed! Passing on weights')

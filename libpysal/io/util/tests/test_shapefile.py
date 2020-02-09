@@ -140,8 +140,10 @@ class test_shx_file(unittest.TestCase):
             assert location == rec[0]
         assert shx2.index == shx.index
         shx2.close(shx._header)
-        new_shx = open('test.shx', 'rb').read()
-        expected_shx = open(pysal_examples.get_path('Point.shx'), 'rb').read()
+        with open('test.shx', 'rb') as f:
+            new_shx = f.read()
+        with open(pysal_examples.get_path('Point.shx'), 'rb') as f:
+            expected_shx = f.read()
         assert new_shx == expected_shx
         os.remove('test.shx')
 

@@ -44,10 +44,10 @@ class test_MtxIO(unittest.TestCase):
                 suffix='.mtx', dir=pysal_examples.get_path(''))
             fname = f.name
             f.close()
-            o = psopen(fname, 'w')
-            o.write(w)
-            o.close()
-            wnew = psopen(fname, 'r').read(sparse=i)
+            with psopen(fname, 'w') as o:
+                o.write(w)
+            with psopen(fname, 'r') as f:
+                wnew = f.read(sparse=i)
             if i:
                 self.assertEqual(wnew.s0, w.s0)
             else:

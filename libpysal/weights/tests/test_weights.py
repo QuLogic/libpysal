@@ -471,7 +471,8 @@ class Test_WSP_Back_To_W(unittest.TestCase):
 
 class TestWSP(unittest.TestCase):
     def setUp(self):
-        self.w = psopen(examples.get_path("sids2.gal")).read()
+        with psopen(examples.get_path("sids2.gal")) as f:
+            self.w = f.read()
         self.wsp = WSP(self.w.sparse, self.w.id_order)
         w3x3 = util.lat2W(3, 3)
         self.w3x3 = WSP(w3x3.sparse)

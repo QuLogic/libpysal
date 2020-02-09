@@ -34,10 +34,10 @@ class test_ArcGISSwmIO(unittest.TestCase):
             suffix='.swm', dir=pysal_examples.get_path(''))
         fname = f.name
         f.close()
-        o = psopen(fname, 'w')
-        o.write(w)
-        o.close()
-        wnew = psopen(fname, 'r').read()
+        with psopen(fname, 'w') as o:
+            o.write(w)
+        with psopen(fname, 'r') as f:
+            wnew = f.read()
         self.assertEqual(wnew.pct_nonzero, w.pct_nonzero)
         os.remove(fname)
 

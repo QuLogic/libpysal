@@ -40,7 +40,8 @@ def spw_from_gal(galfile):
 
     """
 
-    return ps_open(galfile, 'r').read(sparse=True)
+    with ps_open(galfile, 'r') as f:
+        return f.read(sparse=True)
 
 def min_threshold_dist_from_shapefile(shapefile, radius=None, p=2):
     """
