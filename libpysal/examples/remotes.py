@@ -1,8 +1,11 @@
 """
 Handle remote datasets
 """
+import os
+
 from bs4 import BeautifulSoup
 import requests
+
 from .base import (PYSALDATA, Example, get_list_of_files,
                    get_data_home)
 
@@ -10,9 +13,13 @@ from .base import (PYSALDATA, Example, get_list_of_files,
 
 # Geoda Center Data Sets
 
-url = "https://geodacenter.github.io/data-and-lab//"
-page = requests.get(url)
-soup = BeautifulSoup(page.text, 'html.parser')
+try:
+    url = "https://geodacenter.github.io/data-and-lab//"
+    page = requests.get(url).text
+except Exception:
+    with open(os.path.join(os.path.dirname(__file__), 'datasets.html')) as f:
+        page = f.read()
+soup = BeautifulSoup(page, 'html.parser')
 samples = soup.find(class_='samples')
 rows = samples.find_all('tr')
 datasets = {}
