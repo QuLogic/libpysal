@@ -1,6 +1,6 @@
 """Handle remote datasets."""
 
-import warnings
+import pathlib
 
 import requests
 from bs4 import BeautifulSoup
@@ -644,10 +644,10 @@ def _remote_data():
     url = "https://geodacenter.github.io/data-and-lab//"
     try:
         page = requests.get(url, timeout=(10, None))
+        page = page.text
     except:  # noqa: E722
-        warnings.warn("Remote data sets not available. Check connection.")  # noqa: B028
-        return {}
-    soup = BeautifulSoup(page.text, "html.parser")
+        page = (pathlib.Path(__file__).parent / 'datasets.html').read_text()
+    soup = BeautifulSoup(page, "html.parser")
     samples = soup.find(class_="samples")
     rows = samples.find_all("tr")
     datasets = {}
