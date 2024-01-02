@@ -17,6 +17,7 @@ of the underlying data shall be tested in respective constructor test suites.
 """
 
 
+@pytest.mark.network
 class TestContiguity:
     def setup_method(self):
         self.gdf = gpd.read_file(geodatasets.get_path("nybb"))
@@ -141,6 +142,7 @@ class TestContiguity:
         assert pd.api.types.is_numeric_dtype(g._adjacency.dtype)
 
 
+@pytest.mark.network
 class TestTriangulation:
     def setup_method(self):
         gdf = gpd.read_file(geodatasets.get_path("geoda liquor_stores")).explode(
@@ -208,6 +210,7 @@ class TestTriangulation:
         )
 
 
+@pytest.mark.network
 class TestKernel:
     def setup_method(self):
         self.gdf = gpd.read_file(geodatasets.get_path("geoda liquor_stores")).explode(
@@ -279,6 +282,7 @@ class TestKernel:
         assert pd.api.types.is_numeric_dtype(g._adjacency.dtype)
 
 
+@pytest.mark.network
 class TestDistanceBand:
     def setup_method(self):
         df = gpd.read_file(geodatasets.get_path("nybb"))
@@ -332,6 +336,7 @@ class TestDistanceBand:
         assert pd.api.types.is_numeric_dtype(g._adjacency.dtype)
 
 
+@pytest.mark.network
 class TestAdjacency:
     def setup_method(self):
         self.gdf = gpd.read_file(geodatasets.get_path("nybb"))
